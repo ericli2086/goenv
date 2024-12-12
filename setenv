@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+cwd=$(pwd -P)
+cd $(dirname $BASH_SOURCE)
+ABSPATH="$(echo $(pwd -P)/$(basename $BASH_SOURCE))"
+export GOENV_DIR="$(dirname $ABSPATH)"
+GOENV_SRC=${GOENV_DIR}/src/$(ls -l src/ | grep -E "v[0-9]+\.[0-9]+\.[0-9]+\.tar\.gz|goenv-[0-9]+\.[0-9]+\.[0-9]+\.tar\.gz" | awk '{print $NF}' | sort -r | uniq | sed -n '1p')
+GOENV_VERSION=$(ls -l src/ | grep -E "v[0-9]+\.[0-9]+\.[0-9]+\.tar\.gz|goenv-[0-9]+\.[0-9]+\.[0-9]+\.tar\.gz" | awk '{print $NF}' | sort -r | uniq | sed -n '1p' | rev | cut -c 8- | rev | tr -d 'a-z' | sed -r "s/.*([0-9]+\.[0-9]+\.[0-9]+)$/\1/g")
+if [[ ! -x ${GOENV_DIR}/${GOENV_VERSION}/bin/goenv ]]; then
+    rm -rf ${GOENV_DIR}/${GOENV_VERSION}
+    mkdir -p ${GOENV_DIR}/${GOENV_VERSION}
+    tar xvf ${GOENV_SRC} -C ${GOENV_DIR}/${GOENV_VERSION} --strip-components 1
+fi
+export GOENV_ROOT=${GOENV_DIR}/${GOENV_VERSION}
+echo $PATH | grep "${GOENV_ROOT}/bin" >/dev/null 2>&1
+if [[ $? -ne 0 ]] && [[ -f ${GOENV_ROOT}/libexec/goenv ]]; then
+    export PATH="$GOENV_ROOT/bin:$GOENV_ROOT/shims:$GOENV_ROOT/libexec:$PATH"
+fi
+cd $cwd
+eval "$(goenv init -)"
+

@@ -23,3 +23,7 @@ go.work.sum
 
 # env file
 .env
+
+# goenv file
+/[0-9]*.[0-9]*.[0-9]*/
+
