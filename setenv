@@ -11,6 +11,7 @@ if [[ ! -x ${GOENV_DIR}/${GOENV_VERSION}/bin/goenv ]]; then
     mkdir -p ${GOENV_DIR}/${GOENV_VERSION}
     tar xvf ${GOENV_SRC} -C ${GOENV_DIR}/${GOENV_VERSION} --strip-components 1
 fi
+export GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
 export GOENV_ROOT=${GOENV_DIR}/${GOENV_VERSION}
 echo $PATH | grep "${GOENV_ROOT}/bin" >/dev/null 2>&1
 if [[ $? -ne 0 ]] && [[ -f ${GOENV_ROOT}/libexec/goenv ]]; then
