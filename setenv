@@ -13,7 +13,8 @@ if [[ ! -x ${GOENV_DIR}/${GOENV_VERSION}/bin/goenv ]]; then
 fi
 export GO111MODULE="on"
 export CGO_ENABLED="0"
-export GOPROXY="https://mirrors.aliyun.com/goproxy/,direct"
+#export GOPROXY="https://mirrors.aliyun.com/goproxy/,direct"
+export GOPROXY="https://goproxy.io,direct"
 export GOENV_ROOT="${GOENV_DIR}/${GOENV_VERSION}"
 echo $PATH | grep "${GOENV_ROOT}/bin" >/dev/null 2>&1
 if [[ $? -ne 0 ]] && [[ -f ${GOENV_ROOT}/libexec/goenv ]]; then
