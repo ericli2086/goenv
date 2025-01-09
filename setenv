@@ -16,6 +16,8 @@ export CGO_ENABLED="0"
 export GOPROXY="https://mirrors.aliyun.com/goproxy/,direct"
 #export GOPROXY="https://goproxy.io,direct"
 export GOENV_ROOT="${GOENV_DIR}/${GOENV_VERSION}"
+export GO_BUILD_CACHE_PATH="${GOENV_ROOT}/cache"
+mkdir -p ${GO_BUILD_CACHE_PATH}
 echo $PATH | grep "${GOENV_ROOT}/bin" >/dev/null 2>&1
 if [[ $? -ne 0 ]] && [[ -f ${GOENV_ROOT}/libexec/goenv ]]; then
     export PATH="$GOENV_ROOT/bin:$GOENV_ROOT/shims:$GOENV_ROOT/libexec:$PATH"
